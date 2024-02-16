@@ -1,33 +1,28 @@
 import './App.css';
 import 'typeface-roboto';
 import { toCamelCase } from './utility';
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext } from 'react';
 import Controls from './components/Controls';
 import Settings from './components/Settings';
 import Wallpaper from './components/Wallpaper';
 import { DurationContext } from './contexts/DurationContext';
 import DurationContextProvider from './contexts/DurationContext';
-import { ThemeContext } from './contexts/ThemeContext';
+import ThemeContextProvider from './contexts/ThemeContext';
+import SoundContextProvider from './contexts/SoundContext';
 
-function NavButton({ active, setActive, text, onReset }) {
-  const { theme } = useContext(ThemeContext);
+function NavButton({ activeNav, setActiveNav, text, onReset }) {
   const { durations } = useContext(DurationContext);
-
-  useEffect(() => {
-    ['coffee', 'sky'].includes(theme);
-  }, []);
-
   function onClick() {
     const camelCaseText = toCamelCase(text);
     onReset(durations[camelCaseText]);
-    setActive(camelCaseText);
+    setActiveNav(camelCaseText);
   }
 
   return (
     <button
       onClick={onClick}
-      className={`btn-transparent ${
-        active === toCamelCase(text) && 'btn-transparent-active'
+      className={`btn btn-nav ${
+        activeNav === toCamelCase(text) && 'btn-active'
       }`}
     >
       {text}
@@ -60,13 +55,11 @@ function Timer({ timeLeft }) {
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [active, setActive] = useState('pomodoro');
+  const [activeNav, setActiveNav] = useState('pomodoro');
 
   const [timeLeft, setTimeLeft] = useState(1500);
   const timeLeftRef = useRef(null);
   const intervalRef = useRef(null);
-
-  const [theme, setTheme] = useState('coffee');
 
   function handleReset(time) {
     setIsPlaying(false);
@@ -77,35 +70,36 @@ function App() {
 
   return (
     <DurationContextProvider>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <Wallpaper>
-          <section>
-            {isSettingsOpen && (
+      <ThemeContextProvider>
+        <SoundContextProvider>
+          <Wallpaper>
+            <section>
               <Settings
                 setTimeLeft={setTimeLeft}
+                isSettingsOpen={isSettingsOpen}
                 setIsSettingsOpen={setIsSettingsOpen}
-                active={active}
+                activeNav={activeNav}
               />
-            )}
-            <NavButtons
-              onReset={handleReset}
-              active={active}
-              setActive={setActive}
-            />
-            <Timer timeLeft={timeLeft} />
-            <Controls
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-              setIsSettingsOpen={setIsSettingsOpen}
-              active={active}
-              intervalRef={intervalRef}
-              timeLeftRef={timeLeftRef}
-              timeLeft={timeLeft}
-              setTimeLeft={setTimeLeft}
-            />
-          </section>
-        </Wallpaper>
-      </ThemeContext.Provider>
+              <NavButtons
+                onReset={handleReset}
+                activeNav={activeNav}
+                setActiveNav={setActiveNav}
+              />
+              <Timer timeLeft={timeLeft} />
+              <Controls
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                setIsSettingsOpen={setIsSettingsOpen}
+                activeNav={activeNav}
+                intervalRef={intervalRef}
+                timeLeftRef={timeLeftRef}
+                timeLeft={timeLeft}
+                setTimeLeft={setTimeLeft}
+              />
+            </section>
+          </Wallpaper>
+        </SoundContextProvider>
+      </ThemeContextProvider>
     </DurationContextProvider>
   );
 }
