@@ -1,38 +1,266 @@
-.App {
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  5. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  6. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+/*
+  7. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  8. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/*utility*/
+.center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 1rem;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+/*utility*/
+
+:root {
+  font-size: 16px;
+  font-family: 'Roboto';
+}
+
+body {
   color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
-.App-link {
-  color: #61dafb;
+.background-wallpaper {
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  color: white;
+  background-size: cover;
+  background-position: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*buttons*/
+.btn-start,
+.btn-transparent {
+  transition: color 0.1s ease-in, background-color 0.1s ease-in;
+}
+
+.btn-start {
+  border-radius: 1.5rem;
+  width: 8.5rem;
+  height: 45px;
+  border: 1px solid #fff;
+  color: #000;
+  background-color: #fff;
+}
+
+.btn-start:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+.btn-transparent {
+  background-color: transparent;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #fff;
+  font-size: 1.25rem;
+}
+
+.btn-transparent-active {
+  background-color: #fff;
+  color: #000;
+}
+
+.btn-transparent:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.btn-restart,
+.btn-settings {
+  border: none;
+  background-color: transparent;
+  font-size: 2.5rem;
+  padding: 0;
+  transform: rotate(0deg);
+  transition: transform 0.4s ease;
+}
+
+.btn-restart:hover,
+.btn-settings:hover {
+  transform: rotate(45deg);
+}
+
+.btn-save {
+  color: #000;
+  background-color: #fff;
+  border-radius: 1.5rem;
+  border: 1px solid #fff;
+  font-size: 1rem;
+  margin-left: auto;
+  padding: 0.5rem 1.25rem;
+}
+
+.btn-exit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: transparent;
+  border: none;
+  color: hsl(212, 9%, 67%);
+  font-size: 1.5rem;
+}
+
+/*buttons*/
+
+.timer {
+  font-size: 8rem;
+  cursor: default;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0 0 0 0;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  background-color: #000;
+  z-index: 9999;
+  font-size: 1.25rem;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  display: flex;
+  gap: 3rem;
+  top: 3rem;
+  width: 565px;
+}
+
+.modal-sidebar {
+  display: grid;
+  gap: 1rem;
+}
+
+.modal-sidebar > * {
+  position: relative;
+}
+
+.modal-sidebar > *:hover:after,
+.active-modal::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  bottom: 0;
+  left: 0;
+}
+
+.settings-display {
+  display: grid;
+  gap: 3rem;
+  width: 100%;
+}
+
+.timers-setting-page {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1rem;
+  align-items: center;
+}
+
+.timers-setting-page input[type='number'] {
+  background-color: #000;
+  border: 1px solid hsl(212, 9%, 67%);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  width: 100px;
+}
+
+.timer-setting {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.timer-setting span {
+  font-size: 0.85rem;
+  color: hsl(212, 9%, 67%);
+}
+
+select {
+  background-color: #000;
+  border: 1px solid #fff;
+  display: block;
+  width: 100%;
 }
