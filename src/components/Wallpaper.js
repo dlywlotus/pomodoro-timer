@@ -1,4 +1,4 @@
-import { ThemeContext } from './ThemeContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 import { useContext } from 'react';
 
 export default function Wallpaper({ children }) {

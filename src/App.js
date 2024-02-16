@@ -5,9 +5,9 @@ import { useState, useRef, useContext } from 'react';
 import Controls from './components/Controls';
 import Settings from './components/Settings';
 import Wallpaper from './components/Wallpaper';
-import { DurationContext } from './components/DurationContext';
-import DurationContextProvider from './components/DurationContext';
-import { ThemeContext } from './components/ThemeContext';
+import { DurationContext } from './contexts/DurationContext';
+import DurationContextProvider from './contexts/DurationContext';
+import { ThemeContext } from './contexts/ThemeContext';
 
 function NavButton({ active, setActive, text, onReset }) {
   const { durations } = useContext(DurationContext);

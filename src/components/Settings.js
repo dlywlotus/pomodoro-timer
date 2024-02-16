@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { capitalise } from '../utility';
-import { ActiveModalContext } from './ActiveModalContext';
-import ActiveModalContextProvider from './ActiveModalContext';
+import { ActiveModalContext } from '../contexts/ActiveModalContext';
+import ActiveModalContextProvider from '../contexts/ActiveModalContext';
+import { DurationContext } from '../contexts/DurationContext';
 import ThemeSettings from './ThemeSettings';
 import TimerSettings from './TimerSettings';
 import SoundSettings from './SoundSettings';
-import { DurationContext } from './DurationContext';
 
 function NavLink({ title }) {
   const { activeModal, setActiveModal } = useContext(ActiveModalContext);

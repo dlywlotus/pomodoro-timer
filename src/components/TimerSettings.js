@@ -1,48 +1,32 @@
 import { useContext } from 'react';
-import { DurationContext } from './DurationContext';
+import { DurationContext } from '../contexts/DurationContext';
 
-export default function TimerSettings() {
-  function changePomodoro(e) {
-    setDurations({ ...durations, pomodoro: Number(e.target.value) * 60 });
-  }
-  function changeShortBreak(e) {
-    setDurations({ ...durations, shortBreak: Number(e.target.value) * 60 });
-  }
-  function changeLongBreak(e) {
-    setDurations({ ...durations, longBreak: Number(e.target.value) * 60 });
-  }
-
+function TimerSetting({ type }) {
   const { durations, setDurations } = useContext(DurationContext);
 
+  function EditTimerSetting(e, type) {
+    setDurations({ ...durations, [type]: Number(e.target.value) * 60 });
+  }
+
+  return (
+    <div className="timer-setting">
+      <div>Pomodoro</div>
+      <input
+        type="number"
+        value={durations[type] / 60}
+        onChange={e => EditTimerSetting(e, type)}
+      />
+      <span>minutes</span>
+    </div>
+  );
+}
+
+export default function AllTimerSettings() {
   return (
     <div className="timers-setting-page">
-      <div className="timer-setting">
-        <div>Pomodoro</div>
-        <input
-          type="number"
-          value={durations['pomodoro'] / 60}
-          onChange={changePomodoro}
-        />
-        <span>minutes</span>
-      </div>
-      <div className="timer-setting">
-        <div>Short Break</div>
-        <input
-          type="number"
-          value={durations['shortBreak'] / 60}
-          onChange={changeShortBreak}
-        />
-        <span>minutes</span>
-      </div>
-      <div className="timer-setting">
-        <div>Long Break</div>
-        <input
-          type="number"
-          value={durations['longBreak'] / 60}
-          onChange={changeLongBreak}
-        />
-        <span>minutes</span>
-      </div>
+      <TimerSetting type={'pomodoro'} />
+      <TimerSetting type={'shortBreak'} />
+      <TimerSetting type={'longBreak'} />
     </div>
   );
 }

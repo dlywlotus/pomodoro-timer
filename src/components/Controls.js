@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from 'react';
-import { DurationContext } from './DurationContext';
+import { DurationContext } from '../contexts/DurationContext';
 
 export default function Controls({
   isPlaying,
