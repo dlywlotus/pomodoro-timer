@@ -98,48 +98,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: grey;
+  background-color: black;
   color: white;
   background-size: cover;
   background-position: center;
 }
 
 /*buttons*/
-.btn-start,
-.btn-transparent {
-  transition: color 0.1s ease-in, background-color 0.1s ease-in;
+.btn {
+  transition: background-color 0.1s ease-in, backdrop-filter 0.1s ease-in;
+  border-radius: 1.5rem;
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+
+.btn-active,
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: none;
+  margin-inline: 1px;
 }
 
 .btn-start {
-  border-radius: 1.5rem;
   width: 8.5rem;
   height: 45px;
-  border: 1px solid #fff;
-  color: #000;
-  background-color: #fff;
 }
 
-.btn-start:hover {
-  color: #fff;
-  background-color: transparent;
-}
-
-.btn-transparent {
-  background-color: transparent;
-  border-radius: 1.5rem;
+.btn-nav {
   padding: 0.5rem 1rem;
-  border: 1px solid #fff;
   font-size: 1.25rem;
-}
-
-.btn-transparent-active {
-  background-color: #fff;
-  color: #000;
-}
-
-.btn-transparent:hover {
-  background-color: #fff;
-  color: #000;
 }
 
 .btn-restart,
@@ -148,13 +136,11 @@ body {
   background-color: transparent;
   font-size: 2.5rem;
   padding: 0;
-  transform: rotate(0deg);
   transition: transform 0.4s ease;
 }
 
-.btn-restart:hover,
 .btn-settings:hover {
-  transform: rotate(45deg);
+  transform: rotate(90deg);
 }
 
 .btn-save {
@@ -184,14 +170,21 @@ body {
   cursor: default;
 }
 
+.overlay,
+.modal {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
 .overlay {
   position: fixed;
   inset: 0 0 0 0;
   display: flex;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(3px);
   z-index: 1000;
+  pointer-events: none;
 }
 
 .modal {
@@ -205,6 +198,18 @@ body {
   gap: 3rem;
   top: 3rem;
   width: 565px;
+  transition: transform 0.6s ease;
+  transform: translateY(-100px);
+}
+
+.overlay-active,
+.modal-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-active {
+  transform: translateY(0);
 }
 
 .modal-sidebar {
@@ -263,4 +268,6 @@ select {
   border: 1px solid #fff;
   display: block;
   width: 100%;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
 }

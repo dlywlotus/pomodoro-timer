@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { capitalise } from '../utility';
-import { ActiveModalContext } from '../contexts/ActiveModalContext';
 import ActiveModalContextProvider from '../contexts/ActiveModalContext';
+import { ActiveModalContext } from '../contexts/ActiveModalContext';
 import { DurationContext } from '../contexts/DurationContext';
+import { ThemeContext } from '../contexts/ThemeContext.js';
 import ThemeSettings from './ThemeSettings';
 import TimerSettings from './TimerSettings';
 import SoundSettings from './SoundSettings';
@@ -14,7 +15,7 @@ function NavLink({ title }) {
       className={activeModal === title ? 'active-modal' : ''}
       onClick={() => setActiveModal(title)}
     >
-      {capitalise(title)}s
+      {capitalise(title)}
     </li>
   );
 }
@@ -44,32 +45,40 @@ function SettingsDisplay({ children }) {
 }
 
 export default function SettingsModal({
-  active,
+  activeNav,
   setTimeLeft,
+  isSettingsOpen,
   setIsSettingsOpen,
 }) {
-  const { durations } = useContext(DurationContext);
+  const { durations, setDurations } = useContext(DurationContext);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const initialSettingsRef = useRef(null);
 
-  function closeModal() {
+  useEffect(() => {
+    initialSettingsRef.current = { durations, theme };
+  }, [isSettingsOpen]);
+
+  function exitModal() {
     setIsSettingsOpen(false);
+    setTheme(initialSettingsRef.current.theme);
+    setDurations(initialSettingsRef.current.durations);
   }
 
   function saveChanges() {
-    closeModal();
-    setTimeLeft(durations[active]);
+    setIsSettingsOpen(false);
+    setTimeLeft(durations[activeNav]);
   }
 
   return (
     <ActiveModalContextProvider>
       <div
-        className="overlay"
+        className={`overlay ${isSettingsOpen && 'overlay-active'}`}
         onClick={e => {
-          const modal = e.target.closest('.modal');
-          if (!modal) closeModal();
+          if (!e.target.closest('.modal')) exitModal();
         }}
       >
-        <div className="modal">
-          <button className="btn-exit" onClick={closeModal}>
+        <div className={`modal ${isSettingsOpen && 'modal-active'}`}>
+          <button className="btn-exit" onClick={exitModal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
           <SettingsNav />
