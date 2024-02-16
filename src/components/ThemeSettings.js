@@ -14,8 +14,8 @@ export default function ThemeSettings() {
       >
         <option value="coffee">Coffee</option>
         <option value="leaves">Leaves</option>
+        <option value="clouds">Clouds</option>
         <option value="books">Books</option>
-        <option value="sky">Sky</option>
       </select>
     </label>
   );

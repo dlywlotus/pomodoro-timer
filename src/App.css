@@ -163,17 +163,15 @@ body {
   font-size: 1.5rem;
 }
 
+.btn-exit:hover {
+  color: white;
+}
+
 /*buttons*/
 
 .timer {
   font-size: 8rem;
   cursor: default;
-}
-
-.overlay,
-.modal {
-  opacity: 0;
-  transition: opacity 0.6s ease;
 }
 
 .overlay {
@@ -185,6 +183,8 @@ body {
   backdrop-filter: blur(3px);
   z-index: 1000;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .modal {
@@ -198,8 +198,9 @@ body {
   gap: 3rem;
   top: 3rem;
   width: 565px;
-  transition: transform 0.6s ease;
+  opacity: 0;
   transform: translateY(-100px);
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
 }
 
 .overlay-active,
@@ -219,9 +220,13 @@ body {
 
 .modal-sidebar > * {
   position: relative;
+  transition: color 0.2s ease;
 }
 
-.modal-sidebar > *:hover:after,
+.modal-sidebar > *:hover {
+  color: hsl(212, 9%, 67%);
+}
+
 .active-modal::after {
   position: absolute;
   content: '';
@@ -248,7 +253,7 @@ body {
 .timers-setting-page input[type='number'] {
   background-color: #000;
   border: 1px solid hsl(212, 9%, 67%);
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
   width: 100px;
 }
@@ -265,9 +270,11 @@ body {
 
 select {
   background-color: #000;
-  border: 1px solid #fff;
+  border: 1px solid hsl(212, 9%, 67%);
+  border-radius: 0.5rem;
   display: block;
   width: 100%;
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
+  margin-top: 0.5rem;
 }
