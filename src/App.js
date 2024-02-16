@@ -1,7 +1,7 @@
 import './App.css';
 import 'typeface-roboto';
 import { toCamelCase } from './utility';
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useContext, useEffect } from 'react';
 import Controls from './components/Controls';
 import Settings from './components/Settings';
 import Wallpaper from './components/Wallpaper';
@@ -10,7 +10,13 @@ import DurationContextProvider from './contexts/DurationContext';
 import { ThemeContext } from './contexts/ThemeContext';
 
 function NavButton({ active, setActive, text, onReset }) {
+  const { theme } = useContext(ThemeContext);
   const { durations } = useContext(DurationContext);
+
+  useEffect(() => {
+    ['coffee', 'sky'].includes(theme);
+  }, []);
+
   function onClick() {
     const camelCaseText = toCamelCase(text);
     onReset(durations[camelCaseText]);

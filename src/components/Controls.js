@@ -12,6 +12,7 @@ export default function Controls({
   active,
 }) {
   const startTimeRef = useRef(null);
+  const [spinCounter, setSpinCounter] = useState(0);
   const { durations } = useContext(DurationContext);
   const currentDuration = durations[active];
 
@@ -34,11 +35,12 @@ export default function Controls({
     }
   }
 
-  function handleReset() {
+  function handleReset(e) {
     setIsPlaying(false);
     clearInterval(intervalRef.current);
     setTimeLeft(currentDuration);
     timeLeftRef.current = currentDuration;
+    setSpinCounter(spinCounter + 1);
   }
 
   return (
@@ -46,7 +48,11 @@ export default function Controls({
       <button onClick={handleStartNPause} className="btn-start">
         {isPlaying ? 'pause' : 'start'}
       </button>
-      <button onClick={handleReset} className="btn-restart">
+      <button
+        onClick={handleReset}
+        className="btn-restart"
+        style={{ transform: `rotate(${spinCounter * 360}deg)` }}
+      >
         <i className="fa-solid fa-arrow-rotate-right"></i>
       </button>
       <button onClick={() => setIsSettingsOpen(true)} className="btn-settings">

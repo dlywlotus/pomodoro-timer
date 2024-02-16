@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { capitalise } from '../utility';
 import { ActiveModalContext } from '../contexts/ActiveModalContext';
 import ActiveModalContextProvider from '../contexts/ActiveModalContext';
 import { DurationContext } from '../contexts/DurationContext';
+import { ThemeContext } from '../contexts/ThemeContext.js';
 import ThemeSettings from './ThemeSettings';
 import TimerSettings from './TimerSettings';
 import SoundSettings from './SoundSettings';
@@ -48,14 +49,22 @@ export default function SettingsModal({
   setTimeLeft,
   setIsSettingsOpen,
 }) {
-  const { durations } = useContext(DurationContext);
+  const { durations, setDurations } = useContext(DurationContext);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const initialSettingsRef = useRef(null);
 
-  function closeModal() {
+  useEffect(() => {
+    initialSettingsRef.current = { durations, theme };
+  }, []);
+
+  function exitModal() {
     setIsSettingsOpen(false);
+    setTheme(initialSettingsRef.current.theme);
+    setDurations(initialSettingsRef.current.durations);
   }
 
   function saveChanges() {
-    closeModal();
+    setIsSettingsOpen(false);
     setTimeLeft(durations[active]);
   }
 
@@ -65,11 +74,11 @@ export default function SettingsModal({
         className="overlay"
         onClick={e => {
           const modal = e.target.closest('.modal');
-          if (!modal) closeModal();
+          if (!modal) exitModal();
         }}
       >
         <div className="modal">
-          <button className="btn-exit" onClick={closeModal}>
+          <button className="btn-exit" onClick={exitModal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
           <SettingsNav />

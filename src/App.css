@@ -98,7 +98,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: grey;
+  background-color: black;
   color: white;
   background-size: cover;
   background-position: center;
@@ -107,39 +107,37 @@ body {
 /*buttons*/
 .btn-start,
 .btn-transparent {
-  transition: color 0.1s ease-in, background-color 0.1s ease-in;
+  transition: background-color 0.1s ease-in, backdrop-filter 0.1s ease-in;
+  border-radius: 1.5rem;
 }
 
 .btn-start {
-  border-radius: 1.5rem;
   width: 8.5rem;
   height: 45px;
-  border: 1px solid #fff;
-  color: #000;
-  background-color: #fff;
+  border: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 }
 
 .btn-start:hover {
-  color: #fff;
   background-color: transparent;
+  border: 1px solid #fff;
+  backdrop-filter: none;
 }
 
 .btn-transparent {
   background-color: transparent;
-  border-radius: 1.5rem;
   padding: 0.5rem 1rem;
-  border: 1px solid #fff;
+  border: none;
   font-size: 1.25rem;
 }
 
-.btn-transparent-active {
-  background-color: #fff;
-  color: #000;
-}
-
+.btn-transparent-active,
 .btn-transparent:hover {
-  background-color: #fff;
-  color: #000;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  border: none;
 }
 
 .btn-restart,
@@ -148,13 +146,11 @@ body {
   background-color: transparent;
   font-size: 2.5rem;
   padding: 0;
-  transform: rotate(0deg);
   transition: transform 0.4s ease;
 }
 
-.btn-restart:hover,
 .btn-settings:hover {
-  transform: rotate(45deg);
+  transform: rotate(90deg);
 }
 
 .btn-save {
