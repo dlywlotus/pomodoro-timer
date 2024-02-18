@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { toTitleCase } from '../utility';
 import { DurationContext } from '../contexts/DurationContext';
 
 function TimerSetting({ type }) {
@@ -10,7 +11,7 @@ function TimerSetting({ type }) {
 
   return (
     <div className="timer-setting">
-      <div>Pomodoro</div>
+      <div>{toTitleCase(type)}</div>
       <input
         type="number"
         value={durations[type] / 60}

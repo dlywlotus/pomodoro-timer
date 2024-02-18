@@ -10,9 +10,11 @@ export default function Controls({
   timeLeft,
   setTimeLeft,
   activeNav,
+  volumeSetting,
 }) {
   const startTimeRef = useRef(null);
   const [spinCounter, setSpinCounter] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
   const { durations } = useContext(DurationContext);
   const currentDuration = durations[activeNav];
   const { sound } = useContext(SoundContext);
@@ -24,7 +26,9 @@ export default function Controls({
   function handleTimerComplete() {
     clearInterval(intervalRef.current);
     setIsPlaying(false);
-    new Audio(sound).play();
+    let audio = new Audio(sound);
+    audio.volume = volumeSetting / 100;
+    if (!isMuted) audio.play();
   }
 
   function handleStartNPause() {
@@ -51,6 +55,10 @@ export default function Controls({
     setSpinCounter(spinCounter + 1);
   }
 
+  function handleToggleVolume() {
+    isMuted > 0 ? setIsMuted(0) : setIsMuted(100);
+  }
+
   return (
     <div className="flex">
       <button
@@ -68,6 +76,13 @@ export default function Controls({
       </button>
       <button onClick={() => setIsSettingsOpen(true)} className="btn-settings">
         <i className="fa-solid fa-gear"></i>
+      </button>
+      <button onClick={handleToggleVolume} className="btn-volume">
+        {isMuted ? (
+          <i className="fa-solid fa-volume-xmark"></i>
+        ) : (
+          <i className="fa-solid fa-volume-high"></i>
+        )}
       </button>
     </div>
   );

@@ -9,6 +9,7 @@ import { DurationContext } from './contexts/DurationContext';
 import DurationContextProvider from './contexts/DurationContext';
 import ThemeContextProvider from './contexts/ThemeContext';
 import SoundContextProvider from './contexts/SoundContext';
+import VolumeContextProvider from './contexts/VolumeContext';
 
 function NavButton({ activeNav, setActiveNav, text, onReset }) {
   const { durations } = useContext(DurationContext);
@@ -56,6 +57,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('pomodoro');
+  const [volumeSetting, setVolumeSetting] = useState(100);
 
   const [timeLeft, setTimeLeft] = useState(1500);
   const timeLeftRef = useRef(null);
@@ -72,32 +74,34 @@ function App() {
     <DurationContextProvider>
       <ThemeContextProvider>
         <SoundContextProvider>
-          <Wallpaper>
-            <section>
-              <Settings
-                setTimeLeft={setTimeLeft}
-                isSettingsOpen={isSettingsOpen}
-                setIsSettingsOpen={setIsSettingsOpen}
-                activeNav={activeNav}
-              />
-              <NavButtons
-                onReset={handleReset}
-                activeNav={activeNav}
-                setActiveNav={setActiveNav}
-              />
-              <Timer timeLeft={timeLeft} />
-              <Controls
-                isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying}
-                setIsSettingsOpen={setIsSettingsOpen}
-                activeNav={activeNav}
-                intervalRef={intervalRef}
-                timeLeftRef={timeLeftRef}
-                timeLeft={timeLeft}
-                setTimeLeft={setTimeLeft}
-              />
-            </section>
-          </Wallpaper>
+          <VolumeContextProvider>
+            <Wallpaper>
+              <section draggable="false">
+                <Settings
+                  setTimeLeft={setTimeLeft}
+                  isSettingsOpen={isSettingsOpen}
+                  setIsSettingsOpen={setIsSettingsOpen}
+                  activeNav={activeNav}
+                />
+                <NavButtons
+                  onReset={handleReset}
+                  activeNav={activeNav}
+                  setActiveNav={setActiveNav}
+                />
+                <Timer timeLeft={timeLeft} />
+                <Controls
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  setIsSettingsOpen={setIsSettingsOpen}
+                  activeNav={activeNav}
+                  intervalRef={intervalRef}
+                  timeLeftRef={timeLeftRef}
+                  timeLeft={timeLeft}
+                  setTimeLeft={setTimeLeft}
+                />
+              </section>
+            </Wallpaper>
+          </VolumeContextProvider>
         </SoundContextProvider>
       </ThemeContextProvider>
     </DurationContextProvider>

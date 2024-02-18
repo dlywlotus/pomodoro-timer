@@ -110,9 +110,11 @@ body {
   border-radius: 1.5rem;
   background-color: transparent;
   border: 1px solid #fff;
+  user-select: none;
 }
 
 .btn-active,
+.btn-nav-active,
 .btn:hover {
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
@@ -125,22 +127,35 @@ body {
   height: 45px;
 }
 
+.btn-start:hover {
+  margin: 0;
+}
+
 .btn-nav {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
 }
 
 .btn-restart,
-.btn-settings {
+.btn-settings,
+.btn-volume {
   border: none;
   background-color: transparent;
-  font-size: 2.5rem;
+  font-size: 1.9rem;
   padding: 0;
-  transition: transform 0.4s ease;
+  transition: transform 0.75s ease;
 }
 
+.btn-volume {
+  display: flex;
+  justify-content: flex-start;
+  width: 50px;
+}
+
+.btn-restart:hover,
+.btn-volume:hover,
 .btn-settings:hover {
-  transform: rotate(90deg);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .btn-save {
@@ -172,6 +187,7 @@ body {
 .timer {
   font-size: 8rem;
   cursor: default;
+  user-select: none;
 }
 
 .overlay {
@@ -198,6 +214,7 @@ body {
   gap: 3rem;
   top: 3rem;
   width: 565px;
+  height: 333px;
   opacity: 0;
   transform: translateY(-100px);
   transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
@@ -238,7 +255,9 @@ body {
 }
 
 .settings-display {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 3rem;
   width: 100%;
 }
@@ -277,4 +296,40 @@ select {
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
   margin-top: 0.5rem;
+}
+
+input[type='range'] {
+  width: 100%;
+  margin-top: 0.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  background: hsl(212, 9%, 67%);
+}
+
+.alert-vol {
+  margin-top: 1rem;
+}
+
+/* Thumb: webkit */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Thumb: Firefox */
+input[type='range']::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: none;
 }

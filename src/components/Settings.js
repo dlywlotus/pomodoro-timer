@@ -8,6 +8,7 @@ import ThemeSettings from './ThemeSettings';
 import TimerSettings from './TimerSettings';
 import SoundSettings from './SoundSettings';
 import { SoundContext } from '../contexts/SoundContext.js';
+import { VolumeContext } from '../contexts/VolumeContext.js';
 
 function NavLink({ title }) {
   const { activeModal, setActiveModal } = useContext(ActiveModalContext);
@@ -54,10 +55,11 @@ export default function SettingsModal({
   const { durations, setDurations } = useContext(DurationContext);
   const { theme, setTheme } = useContext(ThemeContext);
   const { sound, setSound } = useContext(SoundContext);
+  const { volume, setVolume } = useContext(VolumeContext);
   const initialSettingsRef = useRef(null);
 
   useEffect(() => {
-    initialSettingsRef.current = { durations, theme, sound };
+    initialSettingsRef.current = { durations, theme, sound, volume };
   }, [isSettingsOpen]);
 
   function exitModal() {
@@ -65,6 +67,7 @@ export default function SettingsModal({
     setTheme(initialSettingsRef.current.theme);
     setDurations(initialSettingsRef.current.durations);
     setSound(initialSettingsRef.current.sound);
+    setVolume(initialSettingsRef.current.volume);
   }
 
   function saveChanges() {
