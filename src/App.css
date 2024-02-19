@@ -113,13 +113,19 @@ body {
   user-select: none;
 }
 
-.btn-active,
-.btn-nav-active,
-.btn:hover {
+.btn-nav:hover,
+.btn-nav-active {
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   border: none;
   margin-inline: 1px;
+}
+
+.btn-start:hover,
+.btn-start-active {
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: none;
 }
 
 .btn-start {
@@ -127,18 +133,12 @@ body {
   height: 45px;
 }
 
-.btn-start:hover {
-  margin: 0;
-}
-
 .btn-nav {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
 }
 
-.btn-restart,
-.btn-settings,
-.btn-volume {
+.btn-icon {
   border: none;
   background-color: transparent;
   font-size: 1.9rem;
@@ -149,12 +149,10 @@ body {
 .btn-volume {
   display: flex;
   justify-content: flex-start;
-  width: 50px;
+  width: 35px;
 }
 
-.btn-restart:hover,
-.btn-volume:hover,
-.btn-settings:hover {
+.btn-icon:hover {
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -180,6 +178,24 @@ body {
 
 .btn-exit:hover {
   color: white;
+}
+
+.arrow-btns {
+  position: absolute;
+  display: grid;
+  top: 50%;
+  right: 0.7rem;
+  transform: translateY(-46%);
+}
+
+.btn-arrow-up,
+.btn-arrow-down {
+  background-color: transparent;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: none;
+  font-size: 0.6rem;
+  padding: 0;
 }
 
 /*buttons*/
@@ -214,7 +230,7 @@ body {
   gap: 3rem;
   top: 3rem;
   width: 565px;
-  height: 333px;
+  height: 300px;
   opacity: 0;
   transform: translateY(-100px);
   transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
@@ -258,7 +274,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 3rem;
   width: 100%;
 }
 
@@ -267,9 +282,10 @@ body {
   gap: 1.5rem;
   font-size: 1rem;
   align-items: center;
+  width: 100%;
 }
 
-.timers-setting-page input[type='number'] {
+.timers-setting-page input {
   background-color: #000;
   border: 1px solid hsl(212, 9%, 67%);
   border-radius: 0.5rem;
@@ -277,9 +293,24 @@ body {
   width: 100px;
 }
 
+/* Chrome, Safari, Edge, Opera */
+.timers-setting-page input::-webkit-outer-spin-button,
+.timers-setting-page input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.timers-setting-page input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
 .timer-setting {
   display: grid;
   gap: 0.25rem;
+  width: 100%;
+  position: relative;
 }
 
 .timer-setting span {
@@ -288,6 +319,8 @@ body {
 }
 
 select {
+  appearance: none;
+  -webkit-appearance: none;
   background-color: #000;
   border: 1px solid hsl(212, 9%, 67%);
   border-radius: 0.5rem;
@@ -295,12 +328,26 @@ select {
   width: 100%;
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
-  margin-top: 0.5rem;
+  margin-block: 0.5rem;
+}
+
+.custom-select {
+  position: relative;
+}
+
+.icon-dropdown {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  font-size: 1rem;
+  transform: translateY(-50%);
+}
+
+label {
+  width: 100%;
 }
 
 input[type='range'] {
-  width: 100%;
-  margin-top: 0.5rem;
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
@@ -308,10 +355,9 @@ input[type='range'] {
   border-radius: 15px;
   height: 6px;
   background: hsl(212, 9%, 67%);
-}
-
-.alert-vol {
-  margin-top: 1rem;
+  display: block;
+  margin-top: 0.5rem;
+  width: 100%;
 }
 
 /* Thumb: webkit */
@@ -332,4 +378,56 @@ input[type='range']::-moz-range-thumb {
   background-color: #fff;
   border-radius: 50%;
   border: none;
+}
+
+@media (width < 600px) {
+  .modal {
+    width: min(90vw, 565px);
+    height: auto;
+    gap: 2rem;
+    padding: 2rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+  }
+
+  .settings-display {
+    gap: 1rem;
+  }
+
+  .timers-setting-page {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+
+  .timers-setting-page input[type='number'] {
+    width: 100%;
+  }
+
+  .timer {
+    font-size: 7rem;
+  }
+
+  .btn-exit {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .btn-icon {
+    font-size: 1.5rem;
+  }
+
+  .btn-start,
+  .btn-nav {
+    font-size: 0.8rem;
+  }
+
+  .btn-start {
+    width: 6rem;
+    height: 30px;
+  }
+
+  .btn-volume {
+    width: 27px;
+  }
 }

@@ -1,6 +1,7 @@
 import { useState, useRef, useContext, useEffect } from 'react';
 import { DurationContext } from '../contexts/DurationContext';
 import { SoundContext } from '../contexts/SoundContext';
+import { VolumeContext } from '../contexts/VolumeContext';
 
 export default function Controls({
   isPlaying,
@@ -10,7 +11,6 @@ export default function Controls({
   timeLeft,
   setTimeLeft,
   activeNav,
-  volumeSetting,
 }) {
   const startTimeRef = useRef(null);
   const [spinCounter, setSpinCounter] = useState(0);
@@ -18,6 +18,7 @@ export default function Controls({
   const { durations } = useContext(DurationContext);
   const currentDuration = durations[activeNav];
   const { sound } = useContext(SoundContext);
+  const { volume } = useContext(VolumeContext);
 
   useEffect(() => {
     if (timeLeft === 0) handleTimerComplete();
@@ -26,8 +27,9 @@ export default function Controls({
   function handleTimerComplete() {
     clearInterval(intervalRef.current);
     setIsPlaying(false);
+    setTimeLeft(currentDuration);
     let audio = new Audio(sound);
-    audio.volume = volumeSetting / 100;
+    audio.volume = volume / 100;
     if (!isMuted) audio.play();
   }
 
@@ -63,21 +65,21 @@ export default function Controls({
     <div className="flex">
       <button
         onClick={handleStartNPause}
-        className={`btn btn-start ${isPlaying && 'btn-active'}`}
+        className={`btn btn-start ${isPlaying && 'btn-start-active'}`}
       >
         {isPlaying ? 'pause' : 'start'}
       </button>
       <button
         onClick={handleReset}
-        className="btn-restart"
+        className="btn-icon"
         style={{ transform: `rotate(${spinCounter * 360}deg)` }}
       >
         <i className="fa-solid fa-arrow-rotate-right"></i>
       </button>
-      <button onClick={() => setIsSettingsOpen(true)} className="btn-settings">
+      <button onClick={() => setIsSettingsOpen(true)} className="btn-icon">
         <i className="fa-solid fa-gear"></i>
       </button>
-      <button onClick={handleToggleVolume} className="btn-volume">
+      <button onClick={handleToggleVolume} className="btn-icon btn-volume">
         {isMuted ? (
           <i className="fa-solid fa-volume-xmark"></i>
         ) : (

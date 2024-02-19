@@ -31,25 +31,31 @@ export default function SoundSettings() {
     <div>
       <label>
         Select alert sound:
-        <select name="sound" value={sound} onChange={onSelectSound}>
-          <option value={success}>Success</option>
-          <option value={bird}>Bird</option>
-          <option value={videogame}>video game</option>
-          <option value={bell}>bell</option>
-        </select>
+        <div className="custom-select">
+          <select name="sound" value={sound} onChange={onSelectSound}>
+            <option value={success}>Success</option>
+            <option value={bird}>Bird</option>
+            <option value={videogame}>video game</option>
+            <option value={bell}>bell</option>
+          </select>
+          <i className="fa-solid fa-chevron-down icon-dropdown"></i>
+        </div>
       </label>
-      <div className="alert-vol">Alert volume: </div>
-      <input
-        type="range"
-        min={0}
-        max={100}
-        value={volume}
-        onChange={e => setVolume(Number(e.target.value))}
-        onMouseUp={onSetVolume}
-        style={{
-          background: `linear-gradient(to right, #fff ${volume}%,  hsl(212, 9%, 67%) ${volume}%)`,
-        }}
-      />
+      <label className="alert-vol">
+        Alert volume:
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={volume}
+          onChange={e => setVolume(Number(e.target.value))}
+          onMouseUp={onSetVolume}
+          onTouchEnd={onSetVolume}
+          style={{
+            background: `linear-gradient(to right, #fff ${volume}%,  hsl(212, 9%, 67%) ${volume}%)`,
+          }}
+        />
+      </label>
     </div>
   );
 }

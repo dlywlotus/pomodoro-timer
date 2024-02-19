@@ -10,6 +10,7 @@ import DurationContextProvider from './contexts/DurationContext';
 import ThemeContextProvider from './contexts/ThemeContext';
 import SoundContextProvider from './contexts/SoundContext';
 import VolumeContextProvider from './contexts/VolumeContext';
+import EditingTimerContextProvider from './contexts/EditingTimerContext';
 
 function NavButton({ activeNav, setActiveNav, text, onReset }) {
   const { durations } = useContext(DurationContext);
@@ -23,7 +24,7 @@ function NavButton({ activeNav, setActiveNav, text, onReset }) {
     <button
       onClick={onClick}
       className={`btn btn-nav ${
-        activeNav === toCamelCase(text) && 'btn-active'
+        activeNav === toCamelCase(text) && 'btn-nav-active'
       }`}
     >
       {text}
@@ -57,7 +58,6 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('pomodoro');
-  const [volumeSetting, setVolumeSetting] = useState(100);
 
   const [timeLeft, setTimeLeft] = useState(1500);
   const timeLeftRef = useRef(null);
@@ -77,12 +77,14 @@ function App() {
           <VolumeContextProvider>
             <Wallpaper>
               <section draggable="false">
-                <Settings
-                  setTimeLeft={setTimeLeft}
-                  isSettingsOpen={isSettingsOpen}
-                  setIsSettingsOpen={setIsSettingsOpen}
-                  activeNav={activeNav}
-                />
+                <EditingTimerContextProvider>
+                  <Settings
+                    setTimeLeft={setTimeLeft}
+                    isSettingsOpen={isSettingsOpen}
+                    setIsSettingsOpen={setIsSettingsOpen}
+                    activeNav={activeNav}
+                  />
+                </EditingTimerContextProvider>
                 <NavButtons
                   onReset={handleReset}
                   activeNav={activeNav}

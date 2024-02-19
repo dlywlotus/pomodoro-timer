@@ -1,6 +1,7 @@
-import { useContext, useEffect, useRef } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { capitalise } from '../utility';
 import ActiveModalContextProvider from '../contexts/ActiveModalContext';
+import EditingTimerContextProvider from '../contexts/EditingTimerContext';
 import { ActiveModalContext } from '../contexts/ActiveModalContext';
 import { DurationContext } from '../contexts/DurationContext';
 import { ThemeContext } from '../contexts/ThemeContext.js';
@@ -9,6 +10,7 @@ import TimerSettings from './TimerSettings';
 import SoundSettings from './SoundSettings';
 import { SoundContext } from '../contexts/SoundContext.js';
 import { VolumeContext } from '../contexts/VolumeContext.js';
+import { EditingTimerContext } from '../contexts/EditingTimerContext.js';
 
 function NavLink({ title }) {
   const { activeModal, setActiveModal } = useContext(ActiveModalContext);
@@ -56,6 +58,8 @@ export default function SettingsModal({
   const { theme, setTheme } = useContext(ThemeContext);
   const { sound, setSound } = useContext(SoundContext);
   const { volume, setVolume } = useContext(VolumeContext);
+  const { setEditingTimer } = useContext(EditingTimerContext);
+
   const initialSettingsRef = useRef(null);
 
   useEffect(() => {
@@ -68,6 +72,7 @@ export default function SettingsModal({
     setDurations(initialSettingsRef.current.durations);
     setSound(initialSettingsRef.current.sound);
     setVolume(initialSettingsRef.current.volume);
+    setEditingTimer('');
   }
 
   function saveChanges() {
@@ -90,7 +95,7 @@ export default function SettingsModal({
           <SettingsNav />
           <SettingsDisplay>
             <button onClick={saveChanges} className="btn-save">
-              Save changes
+              Save
             </button>
           </SettingsDisplay>
         </div>
