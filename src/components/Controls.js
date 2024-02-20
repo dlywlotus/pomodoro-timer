@@ -29,6 +29,7 @@ export default function Controls({
     clearInterval(intervalRef.current);
     setIsPlaying(false);
     setTimeLeft(currentDuration);
+    timeLeftRef.current = currentDuration;
     let audio = new Audio(sound);
     audio.volume = volume / 100;
     if (!isMuted) audio.play();
