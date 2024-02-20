@@ -14,6 +14,7 @@ function TimerSetting({ type }) {
 
   function handleArrowClick(e) {
     const id = e.target.closest('button').id;
+    console.log(durations);
     if (id === 'up')
       setDurations({ ...durations, [type]: durations[type] + 60 });
     else

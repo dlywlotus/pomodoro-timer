@@ -23,13 +23,12 @@ export default function Controls({
   const { sound } = useContext(SoundContext);
   const { volume } = useContext(VolumeContext);
 
-  const timeLeftRef = useRef(0);
+  const timeLeftRef = useRef(null);
 
   function handleTimerComplete() {
     clearInterval(intervalRef.current);
     setIsPlaying(false);
     setTimeLeft(currentDuration);
-    timeLeftRef.current = currentDuration;
     let audio = new Audio(sound);
     audio.volume = volume / 100;
     if (!isMuted) audio.play();
@@ -44,12 +43,13 @@ export default function Controls({
       startTimeRef.current = Date.now();
 
       intervalRef.current = setInterval(() => {
-        if (timeLeftRef.current === 0) handleTimerComplete();
         const timeElapsedInSeconds = Math.trunc(
           (Date.now() - startTimeRef.current) / 1000
         );
         setTimeLeft(timeLeft - timeElapsedInSeconds);
         timeLeftRef.current = timeLeft - timeElapsedInSeconds;
+        console.log(timeLeftRef.current);
+        if (timeLeftRef.current === 0) handleTimerComplete();
       }, 10);
     }
   }
