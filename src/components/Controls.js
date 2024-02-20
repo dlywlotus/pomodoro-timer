@@ -43,12 +43,12 @@ export default function Controls({
       startTimeRef.current = Date.now();
 
       intervalRef.current = setInterval(() => {
+        if (timeLeftRef.current === 0) handleTimerComplete();
         const timeElapsedInSeconds = Math.trunc(
           (Date.now() - startTimeRef.current) / 1000
         );
         setTimeLeft(timeLeft - timeElapsedInSeconds);
         timeLeftRef.current = timeLeft - timeElapsedInSeconds;
-        if (timeLeftRef.current === 0) handleTimerComplete();
       }, 10);
     }
   }
