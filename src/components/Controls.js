@@ -48,7 +48,7 @@ export default function Controls({
         );
         setTimeLeft(timeLeft - timeElapsedInSeconds);
         timeLeftRef.current = timeLeft - timeElapsedInSeconds;
-        if (timeLeftRef === 0) handleTimerComplete();
+        if (timeLeftRef.current === 0) handleTimerComplete();
         console.log(timeLeftRef);
       }, 10);
     }
