@@ -1,7 +1,8 @@
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { DurationContext } from '../contexts/DurationContext';
 import { SoundContext } from '../contexts/SoundContext';
 import { VolumeContext } from '../contexts/VolumeContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export default function Controls({
   isPlaying,
@@ -11,18 +12,18 @@ export default function Controls({
   timeLeft,
   setTimeLeft,
   activeNav,
+  initialSettingsRef,
 }) {
   const startTimeRef = useRef(null);
   const [spinCounter, setSpinCounter] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const { durations } = useContext(DurationContext);
   const currentDuration = durations[activeNav];
+  const { theme } = useContext(ThemeContext);
   const { sound } = useContext(SoundContext);
   const { volume } = useContext(VolumeContext);
 
-  useEffect(() => {
-    if (timeLeft === 0) handleTimerComplete();
-  }, [timeLeft]);
+  const timeLeftRef = useRef(0);
 
   function handleTimerComplete() {
     clearInterval(intervalRef.current);
@@ -46,6 +47,9 @@ export default function Controls({
           (Date.now() - startTimeRef.current) / 1000
         );
         setTimeLeft(timeLeft - timeElapsedInSeconds);
+        timeLeftRef.current = timeLeft - timeElapsedInSeconds;
+        if (timeLeftRef === 0) handleTimerComplete();
+        console.log(timeLeftRef);
       }, 10);
     }
   }
@@ -59,6 +63,11 @@ export default function Controls({
 
   function handleToggleVolume() {
     isMuted > 0 ? setIsMuted(0) : setIsMuted(100);
+  }
+
+  function onSettings() {
+    setIsSettingsOpen(true);
+    initialSettingsRef.current = { durations, theme, sound, volume };
   }
 
   return (
@@ -76,7 +85,7 @@ export default function Controls({
       >
         <i className="fa-solid fa-arrow-rotate-right"></i>
       </button>
-      <button onClick={() => setIsSettingsOpen(true)} className="btn-icon">
+      <button onClick={onSettings} className="btn-icon">
         <i className="fa-solid fa-gear"></i>
       </button>
       <button onClick={handleToggleVolume} className="btn-icon btn-volume">

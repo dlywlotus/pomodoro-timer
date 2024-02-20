@@ -13,11 +13,12 @@ function TimerSetting({ type }) {
   }
 
   function handleArrowClick(e) {
-    if (durations[type] / 60 === 1) return;
     const id = e.target.closest('button').id;
-    id === 'up'
-      ? setDurations({ ...durations, [type]: durations[type] + 60 })
-      : setDurations({ ...durations, [type]: durations[type] - 60 });
+    if (id === 'up')
+      setDurations({ ...durations, [type]: durations[type] + 60 });
+    else
+      durations[type] > 60 &&
+        setDurations({ ...durations, [type]: durations[type] - 60 });
   }
 
   return (

@@ -62,6 +62,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(1500);
   const timeLeftRef = useRef(null);
   const intervalRef = useRef(null);
+  const initialSettingsRef = useRef(null);
 
   function handleReset(time) {
     setIsPlaying(false);
@@ -83,6 +84,7 @@ function App() {
                     isSettingsOpen={isSettingsOpen}
                     setIsSettingsOpen={setIsSettingsOpen}
                     activeNav={activeNav}
+                    initialSettingsRef={initialSettingsRef}
                   />
                 </EditingTimerContextProvider>
                 <NavButtons
@@ -100,6 +102,7 @@ function App() {
                   timeLeftRef={timeLeftRef}
                   timeLeft={timeLeft}
                   setTimeLeft={setTimeLeft}
+                  initialSettingsRef={initialSettingsRef}
                 />
               </section>
             </Wallpaper>

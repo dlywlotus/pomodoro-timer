@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { useContext } from 'react';
 import { capitalise } from '../utility';
 import ActiveModalContextProvider from '../contexts/ActiveModalContext';
-import EditingTimerContextProvider from '../contexts/EditingTimerContext';
+
 import { ActiveModalContext } from '../contexts/ActiveModalContext';
 import { DurationContext } from '../contexts/DurationContext';
 import { ThemeContext } from '../contexts/ThemeContext.js';
@@ -53,18 +53,13 @@ export default function SettingsModal({
   setTimeLeft,
   isSettingsOpen,
   setIsSettingsOpen,
+  initialSettingsRef,
 }) {
   const { durations, setDurations } = useContext(DurationContext);
-  const { theme, setTheme } = useContext(ThemeContext);
-  const { sound, setSound } = useContext(SoundContext);
-  const { volume, setVolume } = useContext(VolumeContext);
+  const { setTheme } = useContext(ThemeContext);
+  const { setSound } = useContext(SoundContext);
+  const { setVolume } = useContext(VolumeContext);
   const { setEditingTimer } = useContext(EditingTimerContext);
-
-  const initialSettingsRef = useRef(null);
-
-  useEffect(() => {
-    initialSettingsRef.current = { durations, theme, sound, volume };
-  }, [isSettingsOpen]);
 
   function exitModal() {
     setIsSettingsOpen(false);

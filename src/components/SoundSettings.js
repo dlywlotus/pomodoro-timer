@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { SoundContext } from '../contexts/SoundContext';
 import { VolumeContext } from '../contexts/VolumeContext';
 import bird from '../audio/bird-sound.wav';
