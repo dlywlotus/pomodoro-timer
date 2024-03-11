@@ -10,6 +10,7 @@ function TimerSetting({ type }) {
   function EditTimerSetting(e, type) {
     if (e.target.value > 0)
       setDurations({ ...durations, [type]: Number(e.target.value) * 60 });
+    console.log(durations);
   }
 
   function handleArrowClick(e) {
